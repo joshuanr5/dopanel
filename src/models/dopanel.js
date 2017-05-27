@@ -30,7 +30,7 @@ export default {
         yield put({
           type: 'querySuccess',
           payload: {
-            companies: List.of(companiesResult.data),
+            companies: List.of(companiesResult.data), // iniciando state
             data_categories: categoriesResult.data,
             data_payment_types: paymentTypesResult.data,
           },
@@ -56,11 +56,11 @@ export default {
       };
     },
     addCompanyState(state, { payload }) {
-      console.log(payload);
+      const newCompany = fromJS(payload); //
       return {
         ...state,
-        companies
-      }
+        companies: state.companies.push(newCompany), //
+      };
     },
     showModal(state, { payload }) {
       return {
