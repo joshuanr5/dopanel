@@ -24,7 +24,6 @@ function getMenus(menuArray, parentPath = '/') {
 
 const Menus = ({ handleClickNavMenu }) => {
   const menuItems = getMenus(menu);
-  console.log(menu);
   return (
     <Menu mode="inline" onClick={handleClickNavMenu}>
       {menuItems}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TimePicker as TimePickerAntd, Row, Col, Form, Button } from 'antd';
+import { TimePicker as TimePickerAntd, Row, Col } from 'antd';
 import moment from 'moment';
 
 
@@ -34,7 +34,6 @@ class TimePicker extends React.Component {
           [type]: '',
         },
       }, () => {
-        console.log('hola');
         onChange(this.state.workingTime);
       });
       return;

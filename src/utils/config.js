@@ -3,7 +3,7 @@ export default {
   openPages: ['/login'],
   apiPrefix: '/api',
   api: {
-    businesses: '/business',
+    businesses: '/business/\\?filter={"include":["business_addresses",{"business_payment_types":"payment_type"},{"business_categories":"food_category"}]}',
     categoriesList: '/food_category',
     paymentTypesList: '/payment_type',
     businessCategories: '/business/:id/business_categories',

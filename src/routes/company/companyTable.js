@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Row, Col, Badge } from 'antd';
 import { format as currencyFormat } from 'currency-formatter';
 
+import PaymentsCategoriesTable from './paymentsCategoriesTable';
 import styles from './companyTable.less';
 
 
@@ -16,10 +17,22 @@ function getPriceText(productPesentations = '') {
 
   return text;
 }
+const tableLocaleText = {
+  emptyText: <span>Aún no hay Compañias</span>,
+};
 
 const CompanyTable = ({ companies, loading }) => {
-  const tableLocaleText = {
-    emptyText: <span>Aún no hay Compañias</span>,
+
+  const expandedRowRender = () => {
+    const paymentCategoryData = companies.map(company => {
+      return {
+        categories: company.business_categories,
+        payment_types: company.business_payment_types,
+      };
+    });
+    console.log(paymentCategoryData);
+
+    return (<PaymentsCategoriesTable paymentCategoryData={paymentCategoryData} />);
   };
 
   const columns = [{
@@ -62,15 +75,16 @@ const CompanyTable = ({ companies, loading }) => {
     <Row type="flex" justify="center">
       <Col span={21}>
         <Table
+          size="small"
           rowKey={record => record.id}
           className={styles.table}
           columns={columns}
           pagination={false}
           dataSource={companies}
           loading={loading}
-          bordered
           locale={tableLocaleText}
           scroll={{ x: 567 }}
+          expandedRowRender={expandedRowRender}
         />
       </Col>
     </Row>

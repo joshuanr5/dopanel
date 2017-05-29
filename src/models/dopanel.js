@@ -28,6 +28,7 @@ export default {
       const companiesResult = yield call(query);
       const categoriesResult = yield call(getCategories);
       const paymentTypesResult = yield call(getPaymentTypes);
+      console.log('data fetched -> ', companiesResult.data);
       if (companiesResult) {
         yield put({
           type: 'querySuccess',
