@@ -43,20 +43,18 @@ const ModalCompany = ({
       const { lat, lng, address_name, workingDays, working_time, business_categories, payments, ..._fieldsValue } = fieldsValue;
       const data = {
         business_info: _fieldsValue,
-        business_categories,
-        payments,
-        working_time: getWorkingTime(workingDays, working_time),
-        business_addresses: {
+        business_categories: business_categories.map(id => ({ food_category_id: id })),
+        business_payment_types: payments.map(id => ({ payment_type_id: id })),
+        business_address: {
           address_name,
+          working_time: getWorkingTime(workingDays, working_time),
           coordinates: {
             lat,
             lng,
           },
         },
       };
-
-      console.log('datos ->', data);
-      props.onOk();
+      props.onOk(data);
     });
   };
 
@@ -236,7 +234,7 @@ const ModalCompany = ({
             >
               {
                 props.categories.map(category => (
-                  <Option key={category.code}>{category.display_name}</Option>
+                  <Option key={category.id}>{category.display_name}</Option>
                 ))
               }
             </Select>)

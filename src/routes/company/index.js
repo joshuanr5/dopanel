@@ -6,7 +6,6 @@ import CompanyTable from './companyTable';
 import ModalCompany from './modalCompany';
 
 const Dopanel = ({ dispatch, dopanel, loading }) => {
-  console.log('dopanel->', dopanel);
   const { companies, modalVisible, modalType, data_categories, data_payment_types } = dopanel;
 
   const titleType = modalType === 'add' ? 'Agregar' : 'Editar';
@@ -23,9 +22,13 @@ const Dopanel = ({ dispatch, dopanel, loading }) => {
         type: 'dopanel/closeModal',
       });
     },
-    onOk() {
+    onOk(payload) {
       dispatch({
         type: 'dopanel/closeModal',
+      });
+      dispatch({
+        type: 'dopanel/create',
+        payload,
       });
     },
   };
@@ -47,7 +50,7 @@ const Dopanel = ({ dispatch, dopanel, loading }) => {
         </Col>
       </Row>
       <br />
-      <CompanyTable loading={loading} companies={companies} />
+      <CompanyTable loading={loading} companies={companies.toJS()} />
       {!modalVisible || <ModalCompany company={null} {...modalCompanyProps} />}
     </div>
   );
