@@ -17,6 +17,8 @@ const Dopanel = ({ dispatch, dopanel, loading }) => {
     cancelText: 'Cancelar',
     categories: data_categories,
     paymentTypes: data_payment_types,
+    closable: false,
+    maskClosable: false,
     onCancel() {
       dispatch({
         type: 'dopanel/closeModal',
@@ -42,9 +44,12 @@ const Dopanel = ({ dispatch, dopanel, loading }) => {
     });
   };
 
-  const handleAddUser = () => {
+  const handleAddUser = (id) => {
     dispatch({
       type: 'dopanel/showUserModal',
+      payload: {
+        currentCompanyId: id,
+      },
     });
   };
 
@@ -56,7 +61,13 @@ const Dopanel = ({ dispatch, dopanel, loading }) => {
         </Col>
       </Row>
       <br />
-      <CompanyTable loading={loading} companies={companies.toJS()} onAddUser={handleAddUser} modalUserVisible={modalUserVisible} />
+      <CompanyTable
+        loading={loading}
+        companies={companies.toJS()}
+        onAddUser={handleAddUser}
+        modalUserVisible={modalUserVisible}
+        dispatch={dispatch}
+      />
       {!modalVisible || <ModalCompany company={null} {...modalCompanyProps} />}
     </div>
   );

@@ -7,6 +7,7 @@ import {
   addBussinessPaymentTypes,
   addBussinessCategories,
   addBussinessAddress,
+  addBussinessUser,
 } from '../services/company';
 
 export default {
@@ -18,6 +19,7 @@ export default {
     modalUserVisible: false,
     modalVisible: false,
     modalType: 'add', // add or edit
+    currentCompanyId: '',
   },
   subscriptions: {
     setup({ dispatch }) {
@@ -29,8 +31,8 @@ export default {
       const companiesResult = yield call(query);
       const categoriesResult = yield call(getCategories);
       const paymentTypesResult = yield call(getPaymentTypes);
-      console.log('data fetched -> ', companiesResult.data);
       if (companiesResult) {
+        console.log('data fetched -> ', companiesResult.data);
         yield put({
           type: 'querySuccess',
           payload: {
@@ -43,7 +45,7 @@ export default {
     },
     *create({ payload }, { call, put }) {
       const { business_info, business_address, business_payment_types, business_categories } = payload;
-      const businessInfoData = yield call(create, { data: business_info });
+      const businessInfoData = yield call(create, { data: { ...business_info, status: 'active' } });
       if (!businessInfoData.success) {
         return;
       }
@@ -66,6 +68,18 @@ export default {
       });
     },
   },
+  *createUser({ payload }, { select, call, put }) {
+    console.log('asdasdasdasda');
+    const currentCompanyId = yield select(({ dopanel }) => dopanel.currentCompanyId);
+    const bussinessUserData = yield call(addBussinessUser, { data: { ...payload, status: 'active' }, params: { id: currentCompanyId } });
+    console.log('return',bussinessUserData.success);
+    if (bussinessUserData.success) {
+      yield put({
+        type: 'addCompanyUserState',
+        payload: bussinessUserData.data,
+      });
+    }
+  },
   reducers: {
     querySuccess(state, { payload }) {
       const { companies } = payload;
@@ -79,12 +93,24 @@ export default {
       const newCompany = fromJS(payload); // payload must containt only information of the company
       return {
         ...state,
-        companies: state.companies.push(newCompany), //
+        companies: state.companies.push(newCompany), // maybe there are problemas here
       };
     },
-    showUserModal(state) {
+    addCompanyUserState(state, { payload }) {
+      const { currentCompanyId, companies } = state;
+      const indexCompany = companies.findIndex(company => company.get('id') === currentCompanyId);
+      const newUser = fromJS(payload);
+
       return {
         ...state,
+        currentCompanyId: '',
+        companies: companies.updateIn([indexCompany, 'business_users'], business_users => business_users.push(newUser)),
+      };
+    },
+    showUserModal(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
         modalUserVisible: true,
       };
     },

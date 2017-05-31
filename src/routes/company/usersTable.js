@@ -9,7 +9,7 @@ const UsersTable = ({
   usersData,
 }) => {
   const columns = [{
-    title: 'Tipo',
+    title: 'Rol',
     dataIndex: 'role',
     key: 'role',
   }, {
@@ -40,6 +40,7 @@ const UsersTable = ({
   }];
   return (
     <Table
+      rowKey={(record) => record.id}
       columns={columns}
       dataSource={usersData}
       locale={tableLocaleText}

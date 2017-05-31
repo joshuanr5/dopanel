@@ -24,7 +24,13 @@ const tableLocaleText = {
   emptyText: <span>Aún no hay Compañias</span>,
 };
 
-const CompanyTable = ({ companies, onAddUser, modalUserVisible, loading }) => {
+const CompanyTable = ({
+  companies,
+  onAddUser,
+  modalUserVisible,
+  dispatch,
+  loading,
+}) => {
   const expandedRowRender = (currentCompany) => {
     const currentId = currentCompany.id;
     const paymentCategoryData = [{
@@ -48,7 +54,7 @@ const CompanyTable = ({ companies, onAddUser, modalUserVisible, loading }) => {
   };
 
   const columns = [{
-    title: 'Nombre',
+    title: 'Empresa',
     dataIndex: 'name',
   }, {
     title: 'Calificación',
@@ -58,10 +64,10 @@ const CompanyTable = ({ companies, onAddUser, modalUserVisible, loading }) => {
     dataIndex: 'delivery_price',
     render: deliveryPrice => getPriceText(deliveryPrice),
   }, {
-    title: 'Tiempo máximo',
-    dataIndex: 'max_time_in_delivery',
-    render: (timeDelivery) => {
-      return timeDelivery === 1 ? `${timeDelivery} minuto` : `${timeDelivery} minutos`;
+    title: 'Cantidad de Usuarios',
+    dataIndex: 'business_users',
+    render: (users) => {
+      return `${users.length} ${users.length === 1 ? 'usuario' : 'usuarios'}`;
     },
   }, {
     title: 'Estado',
@@ -80,18 +86,39 @@ const CompanyTable = ({ companies, onAddUser, modalUserVisible, loading }) => {
   }, {
     title: 'Opciones',
     dataIndex: 'id',
-    render: (id, record) => {
-      if (record.business_users.length > 0) {
-        return <span>Usuario creado</span>;
-      }
+    render: (id) => {
       // modalUserVisible
-      return <a onClick={onAddUser}>Crear usuario</a>;
+      return (
+        <div>
+          <a onClick={onAddUser.bind(null, id)}>Crear usuario</a>
+        </div>
+      );
     },
   }];
 
   const propsModalUserCreate = {
     visible: modalUserVisible,
     title: 'Crear usuario',
+    closable: false,
+    maskClosable: false,
+    okText: 'Crear',
+    cancelText: 'Cancelar',
+    onCancel() {
+      dispatch({
+        type: 'dopanel/closeUserModal',
+      });
+    },
+    onOk(data) {
+      dispatch({
+        type: 'dopanel/closeUserModal',
+      });
+      console.log('kakakaka')
+      dispatch({
+        type: 'dopanel/createUser',
+        payload: data,
+      });
+      //TODO: PROBLEM HERE
+    },
   };
   console.log(!modalUserVisible || 'hola');
   return (
@@ -104,7 +131,7 @@ const CompanyTable = ({ companies, onAddUser, modalUserVisible, loading }) => {
             className={styles.table}
             columns={columns}
             pagination={false}
-            dataSource={companies}
+            dataSource={JSON.stringify(companies) === JSON.stringify({}) ? [] : companies}
             loading={loading}
             locale={tableLocaleText}
             scroll={{ x: 680 }}
@@ -112,9 +139,7 @@ const CompanyTable = ({ companies, onAddUser, modalUserVisible, loading }) => {
           />
         </Col>
       </Row>
-      <Row>
-        {!modalUserVisible || <ModalCreateUser {...propsModalUserCreate} />}
-      </Row>
+      {!modalUserVisible || <ModalCreateUser {...propsModalUserCreate} />}
     </div>
   );
   // TODO: modalUserVisible does not appear

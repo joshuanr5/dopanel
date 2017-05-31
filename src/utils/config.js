@@ -9,5 +9,6 @@ export default {
     businessCategories: '/business/:id/business_categories',
     businessPaymentType: '/business/:id/business_payment_types',
     businessAddress: '/business/:id/business_addresses',
+    businessUser: '/business/:id/business_users',
   },
 };

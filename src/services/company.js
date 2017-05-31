@@ -8,6 +8,7 @@ const {
     businessPaymentType,
     businessCategories,
     businessAddress,
+    businessUser,
   },
 } = config;
 
@@ -61,6 +62,15 @@ export function addBussinessCategories({ data, params }) {
 export function addBussinessAddress({ data, params }) {
   return request({
     url: businessAddress,
+    method: 'post',
+    data,
+    params,
+  });
+}
+
+export function addBussinessUser({ data, params }) {
+  return request({
+    url: businessUser,
     method: 'post',
     data,
     params,
