@@ -15,6 +15,7 @@ export default {
     companies: new List(),
     data_categories: {},
     data_payment_types: {},
+    modalUserVisible: false,
     modalVisible: false,
     modalType: 'add', // add or edit
   },
@@ -79,6 +80,18 @@ export default {
       return {
         ...state,
         companies: state.companies.push(newCompany), //
+      };
+    },
+    showUserModal(state) {
+      return {
+        ...state,
+        modalUserVisible: true,
+      };
+    },
+    closeUserModal(state) {
+      return {
+        ...state,
+        modalUserVisible: false,
       };
     },
     showModal(state, { payload }) {

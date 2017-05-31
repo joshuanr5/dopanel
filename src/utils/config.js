@@ -1,9 +1,9 @@
 export default {
-  baseURL: 'http://192.168.1.26:3000/api',
+  baseURL: 'http://localhost:3000/api',
   openPages: ['/login'],
   apiPrefix: '/api',
   api: {
-    businesses: '/business/\\?filter={"include":["business_addresses",{"business_payment_types":"payment_type"},{"business_categories":"food_category"}]}',
+    businesses: '/business/\\?filter={"include":["business_addresses",{"business_payment_types":"payment_type"},{"business_categories":"food_category"},"business_users"]}',
     categoriesList: '/food_category',
     paymentTypesList: '/payment_type',
     businessCategories: '/business/:id/business_categories',
