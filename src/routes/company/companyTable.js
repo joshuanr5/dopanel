@@ -108,15 +108,15 @@ const CompanyTable = ({
         type: 'dopanel/closeUserModal',
       });
     },
-    onOk(data) {
+    onOk(payload) {
+      dispatch({
+        type: 'dopanel/createUser',
+        payload,
+      });
       dispatch({
         type: 'dopanel/closeUserModal',
       });
       console.log('kakakaka')
-      dispatch({
-        type: 'dopanel/createUser',
-        payload: data,
-      });
       //TODO: PROBLEM HERE
     },
   };

@@ -67,18 +67,18 @@ export default {
         payload: businessInfoData.data, // this only saves the company info, it's not necesarry to save all the company data by now
       });
     },
-  },
-  *createUser({ payload }, { select, call, put }) {
-    console.log('asdasdasdasda');
-    const currentCompanyId = yield select(({ dopanel }) => dopanel.currentCompanyId);
-    const bussinessUserData = yield call(addBussinessUser, { data: { ...payload, status: 'active' }, params: { id: currentCompanyId } });
-    console.log('return',bussinessUserData.success);
-    if (bussinessUserData.success) {
-      yield put({
-        type: 'addCompanyUserState',
-        payload: bussinessUserData.data,
-      });
-    }
+    *createUser({ payload }, { select, call, put }) {
+      console.log('asdasdasdasda');
+      const currentCompanyId = yield select(({ dopanel }) => dopanel.currentCompanyId);
+      const bussinessUserData = yield call(addBussinessUser, { data: { ...payload, status: 'active' }, params: { id: currentCompanyId } });
+      console.log('return', bussinessUserData.success);
+      if (bussinessUserData.success) {
+        yield put({
+          type: 'addCompanyUserState',
+          payload: bussinessUserData.data,
+        });
+      }
+    },
   },
   reducers: {
     querySuccess(state, { payload }) {
