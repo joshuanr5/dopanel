@@ -11,7 +11,9 @@ const UsersTable = ({
   const columns = [{
     title: 'Rol',
     dataIndex: 'role',
-    key: 'role',
+    render: (role) => {
+      return role === 'admi' ? 'Administrador' : 'NOSEEEEEE';
+    },
   }, {
     title: 'Nombre',
     key: 'name',
@@ -21,11 +23,9 @@ const UsersTable = ({
   }, {
     title: 'Correo Electrónico',
     dataIndex: 'email',
-    key: 'email',
   }, {
     title: 'Estado',
     dataIndex: 'status',
-    key: 'status',
     render: (status) => {
       let mesagge = '';
       if (status === 'active') {

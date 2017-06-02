@@ -21,7 +21,7 @@ class TimePicker extends React.Component {
         workingTime: initialValueProps,
       });
     }
-    onChange(initialValue);  // Al usar el onChange activa el boton submit
+    onChange(initialValue);
   }
 
   handleChange = (type, e) => {

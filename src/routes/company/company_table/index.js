@@ -1,13 +1,13 @@
 import React from 'react';
-import { Table, Row, Col, Badge } from 'antd';
+import { Table, Row, Col } from 'antd';
 import { format as currencyFormat } from 'currency-formatter';
 
 import PaymentsCategoriesTable from './paymentsCategoriesTable';
 import AddressesTable from './addressesTable';
 import UsersTable from './usersTable';
 import ModalCreateUser from './modalCreateUser';
-import styles from './companyTable.less';
-
+import EditableCellSelect from './editableCellSelect';
+import styles from './index.less';
 
 function getPriceText(productPesentations = '') {
   let text = currencyFormat(productPesentations, { code: 'PEN' });
@@ -27,6 +27,7 @@ const tableLocaleText = {
 const CompanyTable = ({
   companies,
   onAddUser,
+  onEditStatus,
   modalUserVisible,
   dispatch,
   loading,
@@ -59,6 +60,7 @@ const CompanyTable = ({
   }, {
     title: 'Calificación',
     dataIndex: 'rating_score',
+    render: (text) => (text === undefined ? '0 / 5' : text),
   }, {
     title: 'Precio de delivery',
     dataIndex: 'delivery_price',
@@ -72,22 +74,29 @@ const CompanyTable = ({
   }, {
     title: 'Estado',
     dataIndex: 'status',
-    render: (text) => {
-      let status = '';
-      if (text === 'active') {
-        status = 'success';
-      } else {
-        status = 'default';
-      }
+    render: (text, record) => {
+      const saveStatus = (newStatus) => {
+        dispatch({
+          type: 'dopanel/editCompany',
+          payload: newStatus,
+        });
+      };
       return (
-        <Badge status={status} text={text === 'active' ? 'Activo' : 'Inactivo'} />
+        <EditableCellSelect
+          value={text}
+          onAddUser={onEditStatus.bind(null, record.id)}
+          saveStatus={saveStatus}
+          options={[
+            { name: 'active', display_name: 'Activo' },
+            { name: 'inactive', display_name: 'Inactivo' },
+          ]}
+        />
       );
     },
   }, {
     title: 'Opciones',
     dataIndex: 'id',
     render: (id) => {
-      // modalUserVisible
       return (
         <div>
           <a onClick={onAddUser.bind(null, id)}>Crear usuario</a>
@@ -116,11 +125,9 @@ const CompanyTable = ({
       dispatch({
         type: 'dopanel/closeUserModal',
       });
-      console.log('kakakaka')
-      //TODO: PROBLEM HERE
     },
   };
-  console.log(!modalUserVisible || 'hola');
+
   return (
     <div>
       <Row type="flex" justify="center">
@@ -134,7 +141,7 @@ const CompanyTable = ({
             dataSource={JSON.stringify(companies) === JSON.stringify({}) ? [] : companies}
             loading={loading}
             locale={tableLocaleText}
-            scroll={{ x: 680 }}
+            scroll={{ x: 690 }}
             expandedRowRender={expandedRowRender}
           />
         </Col>
@@ -142,7 +149,6 @@ const CompanyTable = ({
       {!modalUserVisible || <ModalCreateUser {...propsModalUserCreate} />}
     </div>
   );
-  // TODO: modalUserVisible does not appear
 };
 
 export default CompanyTable;

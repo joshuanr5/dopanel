@@ -2,12 +2,15 @@ import React from 'react';
 import { connect } from 'dva';
 import { Button, Row, Col } from 'antd';
 
-import CompanyTable from './companyTable';
+import CompanyTable from './company_table';
 import ModalCompany from './modalCompany';
 
-const Dopanel = ({ dispatch, dopanel, loading }) => {
+const Dopanel = ({
+  dispatch,
+  dopanel,
+  loading,
+}) => {
   const { companies, modalVisible, modalType, data_categories, data_payment_types, modalUserVisible } = dopanel;
-
   const titleType = modalType === 'add' ? 'Agregar' : 'Editar';
   const modalCompanyProps = {
     title: `${titleType} compañía`,
@@ -26,13 +29,36 @@ const Dopanel = ({ dispatch, dopanel, loading }) => {
     },
     onOk(payload) {
       dispatch({
-        type: 'dopanel/closeModal',
-      });
-      dispatch({
         type: 'dopanel/create',
         payload,
       });
+      dispatch({
+        type: 'dopanel/closeModal',
+      });
     },
+  };
+
+  const propCompanyTable = {
+    loading,
+    companies: companies.toJS(),
+    onAddUser(id) {
+      dispatch({
+        type: 'dopanel/showUserModal',
+        payload: {
+          currentCompanyId: id,
+        },
+      });
+    },
+    onEditStatus(id) {
+      dispatch({
+        type: 'dopanel/editCurrentCompanyId',
+        payload: {
+          currentCompanyId: id,
+        },
+      });
+    },
+    modalUserVisible,
+    dispatch,
   };
 
   const handleAddClick = () => {
@@ -40,15 +66,6 @@ const Dopanel = ({ dispatch, dopanel, loading }) => {
       type: 'dopanel/showModal',
       payload: {
         modalType: 'add',
-      },
-    });
-  };
-
-  const handleAddUser = (id) => {
-    dispatch({
-      type: 'dopanel/showUserModal',
-      payload: {
-        currentCompanyId: id,
       },
     });
   };
@@ -61,13 +78,7 @@ const Dopanel = ({ dispatch, dopanel, loading }) => {
         </Col>
       </Row>
       <br />
-      <CompanyTable
-        loading={loading}
-        companies={companies.toJS()}
-        onAddUser={handleAddUser}
-        modalUserVisible={modalUserVisible}
-        dispatch={dispatch}
-      />
+      <CompanyTable {...propCompanyTable} />
       {!modalVisible || <ModalCompany company={null} {...modalCompanyProps} />}
     </div>
   );

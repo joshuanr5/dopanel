@@ -9,6 +9,7 @@ const {
     businessCategories,
     businessAddress,
     businessUser,
+    business,
   },
 } = config;
 
@@ -41,7 +42,7 @@ export function getPaymentTypes() {
   });
 }
 
-export function addBussinessPaymentTypes({ data, params }) {
+export function addBusinessPaymentTypes({ data, params }) {
   return request({
     url: businessPaymentType,
     method: 'post',
@@ -50,7 +51,7 @@ export function addBussinessPaymentTypes({ data, params }) {
   });
 }
 
-export function addBussinessCategories({ data, params }) {
+export function addBusinessCategories({ data, params }) {
   return request({
     url: businessCategories,
     method: 'post',
@@ -59,7 +60,7 @@ export function addBussinessCategories({ data, params }) {
   });
 }
 
-export function addBussinessAddress({ data, params }) {
+export function addBusinessAddress({ data, params }) {
   return request({
     url: businessAddress,
     method: 'post',
@@ -68,10 +69,19 @@ export function addBussinessAddress({ data, params }) {
   });
 }
 
-export function addBussinessUser({ data, params }) {
+export function addBusinessUser({ data, params }) {
   return request({
     url: businessUser,
     method: 'post',
+    data,
+    params,
+  });
+}
+
+export function editBusiness({ data, params }) {
+  return request({
+    url: business,
+    method: 'patch',
     data,
     params,
   });

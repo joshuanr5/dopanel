@@ -1,5 +1,5 @@
 export default {
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'http://192.168.1.29:3000/api',
   openPages: ['/login'],
   apiPrefix: '/api',
   api: {
@@ -10,5 +10,6 @@ export default {
     businessPaymentType: '/business/:id/business_payment_types',
     businessAddress: '/business/:id/business_addresses',
     businessUser: '/business/:id/business_users',
+    business: '/business/:id',
   },
 };

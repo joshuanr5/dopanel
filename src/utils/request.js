@@ -67,7 +67,7 @@ export default options => fetch(options).then((response) => {
     success: true,
     status,
     message: statusText,
-    data, // ...data
+    data,
   };
 }).catch((error) => {
   const { response } = error;

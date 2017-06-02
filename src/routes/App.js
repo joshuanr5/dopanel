@@ -7,16 +7,18 @@ const { Content } = LayoutAntd;
 
 const App = ({ children }) => {
   return (
-    <LayoutAntd className={styles.layout}>
-      <Header />
-      <LayoutAntd className={styles.container}>
-        <Sider />
-        <Content className={styles.main}>
-          {children}
-        </Content>
+    <div>
+      <LayoutAntd className={styles.layout}>
+        <Header />
+        <LayoutAntd className={styles.container}>
+          <Sider />
+          <Content className={styles.main}>
+            {children}
+          </Content>
+        </LayoutAntd>
       </LayoutAntd>
       <Footer />
-    </LayoutAntd>
+    </div>
   );
 };
 
