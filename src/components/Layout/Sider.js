@@ -2,13 +2,16 @@ import React from 'react';
 import { Layout } from 'antd';
 import Menu from './Menu.js';
 
+import './layout.less';
+
 const SiderAntd = Layout.Sider;
 
 const Sider = () => {
   return (
     <SiderAntd
-      style={{ background: '#fff', marginTop: '25px' }}
+      width={200} style={{ background: '#fff', marginLeft: '24px' }}
     >
+      <div className="logo"></div>
       <Menu />
     </SiderAntd>
   );

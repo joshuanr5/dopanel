@@ -1,9 +1,9 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
-import styles from './Header.less';
+import { Layout, Menu, Icon } from 'antd';
+import './Header.less';
 
 const SubMenu = Menu.SubMenu;
-
+const HeaderAntd = Layout.Header;
 
 const Header = () => {
   const handleClickMenu = (e) => {
@@ -11,22 +11,21 @@ const Header = () => {
   };
 
   return (
-    <div>
-      <div className={styles.rightWarpper}>
-        <Menu mode="horizontal" onClick={handleClickMenu}>
-          <SubMenu
-            style={{
-              float: 'right',
-            }}
-            title={<span><Icon type="user" />{'Admin'} </span>}
-          >
-            <Menu.Item key="logout">
-              Sign out
+    <HeaderAntd>
+      <div />
+      <Menu theme="dark" mode="horizontal" onClick={handleClickMenu}>
+        <SubMenu
+          style={{
+            float: 'right',
+          }}
+          title={<span><Icon type="user" />{'Admin'} </span>}
+        >
+          <Menu.Item key="logout">
+            Sign out
             </Menu.Item>
-          </SubMenu>
-        </Menu>
-      </div>
-    </div>
+        </SubMenu>
+      </Menu>
+    </HeaderAntd>
   );
 };
 

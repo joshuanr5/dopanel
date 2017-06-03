@@ -38,7 +38,7 @@ const Dopanel = ({
     },
   };
 
-  const propCompanyTable = {
+  const companyTableProps = {
     loading,
     companies: companies.toJS(),
     onAddUser(id) {
@@ -78,7 +78,7 @@ const Dopanel = ({
         </Col>
       </Row>
       <br />
-      <CompanyTable {...propCompanyTable} />
+      <CompanyTable {...companyTableProps} />
       {!modalVisible || <ModalCompany company={null} {...modalCompanyProps} />}
     </div>
   );

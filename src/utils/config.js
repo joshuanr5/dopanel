@@ -3,6 +3,7 @@ export default {
   openPages: ['/login'],
   apiPrefix: '/api',
   api: {
+    // dopanel model
     businesses: '/business/\\?filter={"include":["business_addresses",{"business_payment_types":"payment_type"},{"business_categories":"food_category"},"business_users"]}',
     categoriesList: '/food_category',
     paymentTypesList: '/payment_type',
@@ -11,5 +12,8 @@ export default {
     businessAddress: '/business/:id/business_addresses',
     businessUser: '/business/:id/business_users',
     business: '/business/:id',
+
+    // customers model
+    customers: '/customer/\\?filter={"include":["customer_addresses"]}',
   },
 };

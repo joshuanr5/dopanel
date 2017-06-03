@@ -16,6 +16,12 @@ export default ({ history, app }) => {
     {
       path: '/',
       component: App,
+      getIndexRoute(nextState, cb) {
+        require.ensure([], (require) => {
+          registerModel(app, require('./models/dopanel'));
+          cb(null, { component: require('./routes/company') });
+        }, 'dopanel');
+      },
       childRoutes: [
         {
           path: 'business',
@@ -25,6 +31,16 @@ export default ({ history, app }) => {
               registerModel(app, require('./models/dopanel'));
               cb(null, require('./routes/company'));
             }, 'business');
+          },
+        },
+        {
+          path: 'customers',
+          name: 'customers',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/customers'));
+              cb(null, require('./routes/customers'));
+            }, 'customers');
           },
         },
         {

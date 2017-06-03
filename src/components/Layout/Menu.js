@@ -25,7 +25,7 @@ function getMenus(menuArray, parentPath = '/') {
 const Menus = ({ handleClickNavMenu }) => {
   const menuItems = getMenus(menu);
   return (
-    <Menu mode="inline" onClick={handleClickNavMenu}>
+    <Menu theme="dark" mode="inline" onClick={handleClickNavMenu} style={{ height: '100% - 40px' }}>
       {menuItems}
     </Menu>
   );
